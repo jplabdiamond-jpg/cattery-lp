@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mememaru｜もふもふと、幸せな静かな暮らし。</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Old+Mincho:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fdfbf5;
+  --paper-2:#f9f5ec;
+  --pistachio:#cbe5bb;
+  --pistachio-d:#4f7a3c;
+  --pistachio-soft:#eff8e8;
+  --pistachio-bg:#ebf6df;      /* セクション用：明るいピスタチオ */
+  --pink:#fbddd8;
+  --pink-d:#e8ada7;
+  --pink-soft:#fef2ef;
+  --pink-bg:#fef0ec;           /* セクション用：明るい淡ピンク */
+  /* セクション間：斜めの破れ（約30度めやすは全幅で高すぎるため、はっきり斜めに） */
+  --rise:170px;
+  --diagStraight:polygon(0 0,100% 0,100% calc(100% - var(--rise)),0 100%);
+  --diag:polygon(0 0,100% 0,
+    100% calc(100% - 153px),96.5% calc(100% - 138px),93% calc(100% - 148px),89.5% calc(100% - 132px),86% calc(100% - 134px),82.5% calc(100% - 115px),79% calc(100% - 123px),75.5% calc(100% - 114px),72% calc(100% - 102px),68.5% calc(100% - 110px),65% calc(100% - 95px),61.5% calc(100% - 101px),58% calc(100% - 82px),54.5% calc(100% - 84px),51% calc(100% - 69px),47.5% calc(100% - 77px),44% calc(100% - 65px),40.5% calc(100% - 65px),37% calc(100% - 49px),33.5% calc(100% - 58px),30% calc(100% - 41px),26.5% calc(100% - 42px),23% calc(100% - 26px),19.5% calc(100% - 34px),16% calc(100% - 22px),12.5% calc(100% - 26px),9% calc(100% - 8px),5.5% calc(100% - 11px),2% calc(100% - 4px),0 calc(100% - 2px));
+  --ink:#3c372f;
+  --ink-soft:#6d6456;
+  --white:#fffdf8;
+  --mincho:"Shippori Mincho",serif;
+  --mincho-2:"Zen Old Mincho",serif;
+  --en:"Cormorant Garamond",serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--mincho);color:var(--ink);
+  background:linear-gradient(rgba(252,248,241,.8),rgba(252,248,241,.8)) top left/100% 100% no-repeat,url('bg.jpg') top center/1400px auto repeat;
+  background-color:var(--paper);line-height:2.05;letter-spacing:.09em;overflow-x:hidden;font-weight:400;-webkit-font-smoothing:antialiased;position:relative}
+/* paper texture */
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;mix-blend-mode:multiply;opacity:.26;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px;position:relative;z-index:2}
+.en{font-family:var(--en);letter-spacing:.18em}
+.vrl{writing-mode:vertical-rl}
+
+/* ===== photo with thin white margin ===== */
+.photo{background:var(--white);padding:7px;box-shadow:0 14px 30px rgba(75,69,61,.11),0 2px 6px rgba(75,69,61,.05);position:relative;transition:transform .7s cubic-bezier(.2,.8,.3,1),box-shadow .7s}
+.photo .img{width:100%;height:100%;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;color:var(--pistachio-d);
+  background:radial-gradient(circle at 38% 32%,var(--pistachio-soft),transparent 62%),radial-gradient(circle at 72% 76%,var(--pink-soft),transparent 58%),linear-gradient(140deg,#f2efe2,#f4e3de);}
+.photo .img .lab{font-family:var(--en);font-style:italic;font-size:14px;color:var(--ink-soft);opacity:.7}
+.photo:hover{transform:translateY(-6px) rotate(0)!important;box-shadow:0 22px 44px rgba(75,69,61,.16)}
+.photo .cap{position:absolute;bottom:-26px;left:0;right:0;text-align:center;font-family:var(--en);font-style:italic;font-size:13px;color:var(--ink-soft)}
+
+/* ===== animations ===== */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity 1.1s cubic-bezier(.2,.8,.2,1),transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.drift{animation:drift var(--dur,7s) ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(calc(var(--fl,16px) * -1)) rotate(var(--r,0deg))}}
+.sway{animation:sway 9s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(var(--r,-2deg))}50%{transform:rotate(calc((var(--r,-2deg)) * -1))}}
+
+/* ===== header ===== */
+header{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 40px;transition:.5s}
+.brand{flex-shrink:0}
+header.scrolled{background:rgba(244,239,228,.86);backdrop-filter:blur(8px);padding:14px 40px;box-shadow:0 1px 0 rgba(75,69,61,.06)}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--mincho);font-weight:600;font-size:20px;letter-spacing:.18em}
+.brand .blogo{height:clamp(30px,2.9vw,40px);width:auto;display:block}
+.brand small{display:block;font-family:var(--en);font-style:italic;font-size:12px;letter-spacing:.14em;color:var(--pistachio-d)}
+nav.main{display:flex;gap:30px;font-size:12.5px;letter-spacing:.14em}
+nav.main a{position:relative;padding-bottom:4px;transition:.3s}
+nav.main a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--pink-d);transition:.4s}
+nav.main a:hover{color:var(--pistachio-d)}nav.main a:hover::after{width:100%}
+.hcta{font-size:12px;letter-spacing:.14em;border:1px solid var(--ink);border-radius:30px;padding:9px 20px;transition:.35s;white-space:nowrap;flex-shrink:0;line-height:1}
+.hcta:hover{background:var(--pistachio);border-color:var(--pistachio);color:#fff}
+@media(max-width:860px){nav.main{display:none}}
+/* ===== mobile menu ===== */
+.burger{display:none;width:28px;height:19px;flex-direction:column;justify-content:space-between;background:none;border:0;padding:0;cursor:pointer;flex-shrink:0}
+.burger span{display:block;height:1.4px;width:100%;background:var(--ink);transition:.45s cubic-bezier(.22,.8,.3,1)}
+.burger.on span:nth-child(1){transform:translateY(8.8px) rotate(42deg)}
+.burger.on span:nth-child(2){opacity:0}
+.burger.on span:nth-child(3){transform:translateY(-8.8px) rotate(-42deg)}
+.drawer{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(rgba(252,248,241,.95),rgba(252,248,241,.95)) top left/100% 100% no-repeat,url('bg.jpg') top center/1400px auto repeat;
+  background-color:var(--paper);
+  opacity:0;visibility:hidden;transform:translateY(-12px);transition:.5s cubic-bezier(.22,.8,.3,1)}
+.drawer.open{opacity:1;visibility:visible;transform:none}
+.drawer nav{display:flex;flex-direction:column;align-items:center;gap:28px;margin-bottom:40px}
+.drawer nav a{font-family:var(--mincho);font-size:21px;letter-spacing:.22em;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;transform:translateY(12px);transition:.55s cubic-bezier(.22,.8,.3,1)}
+.drawer nav a em{font-family:var(--en);font-style:italic;font-size:11px;letter-spacing:.18em;color:var(--pistachio-d)}
+.drawer.open nav a{opacity:1;transform:none}
+.drawer.open nav a:nth-child(1){transition-delay:.1s}.drawer.open nav a:nth-child(2){transition-delay:.16s}
+.drawer.open nav a:nth-child(3){transition-delay:.22s}.drawer.open nav a:nth-child(4){transition-delay:.28s}
+.drawer.open nav a:nth-child(5){transition-delay:.34s}
+.dcta{font-size:13px;letter-spacing:.18em;border:1px solid var(--ink);border-radius:30px;padding:14px 36px;line-height:1;opacity:0;transform:translateY(12px);transition:.55s cubic-bezier(.22,.8,.3,1) .4s}
+.drawer.open .dcta{opacity:1;transform:none}
+.dsub{font-family:var(--en);font-style:italic;font-size:12px;color:var(--pistachio-d);letter-spacing:.12em;margin-top:26px;opacity:0;transition:.6s .5s}
+.drawer.open .dsub{opacity:1}
+body.menu .hcta{opacity:0;pointer-events:none;transition:.3s}
+
+
+/* ===== hero ===== */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:150px 0 90px}
+.hero .en-top{font-family:var(--en);font-style:italic;font-size:19px;letter-spacing:.22em;color:var(--pistachio-d);margin-bottom:18px;display:inline-block}
+.hero h1{font-family:var(--mincho);font-weight:500;font-size:clamp(34px,5.6vw,66px);letter-spacing:.14em;line-height:1.5;position:relative;z-index:3}
+.hero h1 .tint{color:var(--pink-d)}
+.hero .sub{margin-top:26px;font-size:14px;color:var(--ink-soft);letter-spacing:.1em;max-width:520px;margin-left:auto;margin-right:auto;position:relative;z-index:3}
+/* scattered hero photos */
+.hero .p{position:absolute;z-index:6}
+.hp1{width:290px;top:11%;left:5%;--r:-4deg}
+.hp2{width:400px;top:9%;right:-10%;--r:5deg}
+.hero .hcut{position:absolute;z-index:1;pointer-events:none}
+.hero .hp3w{width:296px;bottom:-110px;left:-2%}
+.hp3w .in{position:relative}
+.hp3w img{width:100%;height:auto;display:block;filter:drop-shadow(5px 10px 9px rgba(82,70,54,.32));animation-duration:22s}
+.hp4{width:224px;bottom:9%;right:8%;--r:-5deg}
+.hero .p img{width:100%;height:auto;display:block;filter:drop-shadow(5px 10px 9px rgba(82,70,54,.32))}
+.hp2 img{animation-duration:20s}
+.hp2{--fl:30px}
+.scroll-cue{position:absolute;bottom:92px;left:50%;transform:translateX(-50%);z-index:4;font-family:var(--en);font-style:italic;font-size:13px;letter-spacing:.2em;color:var(--ink-soft);display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-cue::after{content:"";width:1px;height:44px;background:var(--ink-soft);animation:cue 2s infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ===== section ===== */
+section{position:relative;padding:110px 0}
+.shead{text-align:center;margin-bottom:60px}
+.shead .en{font-family:var(--en);font-style:italic;font-size:17px;letter-spacing:.2em;color:var(--pistachio-d);display:block;margin-bottom:10px}
+.shead h2{font-family:var(--mincho);font-weight:500;font-size:clamp(23px,3vw,32px);letter-spacing:.16em}
+.shead p{font-size:13px;color:var(--ink-soft);margin-top:12px;letter-spacing:.1em}
+.thin-btn{display:inline-block;font-size:12.5px;letter-spacing:.16em;border-bottom:1px solid var(--ink);padding-bottom:6px;transition:.35s}
+.thin-btn:hover{color:var(--pistachio-d);border-color:var(--pistachio)}
+.center{text-align:center}
+
+/* ===== concept ===== */
+.concept .wrap{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.concept-collage{position:relative;height:440px}
+.concept-collage .photo{position:absolute}
+.cc1{width:240px;top:0;left:30px;--r:-3deg}.cc1 .img{aspect-ratio:4/5}
+.cc2{width:170px;right:20px;top:60px;--r:4deg}.cc2 .img{aspect-ratio:1}
+.cc3{width:150px;bottom:10px;left:0;--r:5deg}.cc3 .img{aspect-ratio:1}
+.concept-text .en{font-family:var(--en);font-style:italic;color:var(--pistachio-d);font-size:17px;letter-spacing:.18em}
+.concept-text h2{font-family:var(--mincho);font-weight:500;font-size:clamp(22px,2.9vw,30px);line-height:1.7;letter-spacing:.1em;margin:12px 0 22px}
+.concept-text h2 .tint{color:var(--pink-d)}
+.concept-text p{font-size:14px;color:#6c655b;margin-bottom:16px;letter-spacing:.08em}
+
+/* ===== kittens ===== */
+/* コンテンツセクションは1背景（単色）。境目は斜めの破れ＋白い厚み＋少しの影で立体感 */
+.rip{position:relative;background:var(--sec);padding:110px 0}
+.rip.pink{--sec:var(--pink-bg)}
+.rip.green{--sec:var(--pistachio-bg)}
+.sheet{display:none}
+.rip>*{position:relative;z-index:1}
+/* 上の紙の破れ下端（色）＋影で立体感 */
+.rip::after,.hero::after{content:"";position:absolute;left:-60px;right:-60px;top:calc(100% - 66px);height:120px;background:var(--sec);
+  transform-origin:center;pointer-events:none;z-index:3}
+/* 破れ際の白い紙の厚み。--deck でセクションごとに白幅を変える */
+.rip::before,.hero::before{content:"";position:absolute;left:-60px;right:-60px;top:calc(100% - 34px);height:calc(88px + var(--deck,16px));background:var(--white);
+  transform-origin:center;pointer-events:none;z-index:2}
+.hero::after{background:linear-gradient(rgba(252,248,241,.8),rgba(252,248,241,.8)) top left/100% 100% no-repeat,url('bg.jpg') top center/1400px auto repeat;background-color:var(--paper)}
+.hero{position:relative;z-index:70}
+.hero>*{position:relative;z-index:1}
+.concept{z-index:60}.kittens{z-index:50}#voices{z-index:40}#ig{z-index:30}#blog{z-index:20}.contact{z-index:10}
+footer{position:relative;z-index:1}
+/* ▼ 斜めの向きを交互に＋破れ形状を毎回変える＋白幅を変える */
+.hero{--deck:18px}
+.hero::after{filter:url(#torn) drop-shadow(0 6px 5px rgba(70,58,45,.2));transform:skewY(-3deg)}
+.hero::before{filter:url(#tornW);transform:skewY(-3deg)}
+/* ▼ ヒーロー：古紙画像そのものを破く（背景＋マスク） */
+.heroWrap{position:relative;z-index:70;filter:drop-shadow(0 7px 6px rgba(70,58,45,.22))}
+.hero{z-index:auto;
+  background:linear-gradient(rgba(252,248,241,.8),rgba(252,248,241,.8)) top left/100% 100% no-repeat,url('bg.jpg') top center/1400px auto repeat;
+  background-color:var(--paper);
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1400'%20height='170'%20preserveAspectRatio='none'%3E%3Cfilter%20id='t'%20x='-8%25'%20y='-60%25'%20width='116%25'%20height='240%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.05%200.14'%20numOctaves='5'%20seed='7'%20result='n'/%3E%3CfeDisplacementMap%20in='SourceGraphic'%20in2='n'%20scale='20'%20xChannelSelector='R'%20yChannelSelector='G'/%3E%3C/filter%3E%3Cpath%20d='M-60,-80%20H1460%20V70%20L-60,145%20Z'%20fill='%23fff'%20filter='url%28%23t%29'/%3E%3C/svg%3E"),linear-gradient(#000,#000);
+  mask-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1400'%20height='170'%20preserveAspectRatio='none'%3E%3Cfilter%20id='t'%20x='-8%25'%20y='-60%25'%20width='116%25'%20height='240%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.05%200.14'%20numOctaves='5'%20seed='7'%20result='n'/%3E%3CfeDisplacementMap%20in='SourceGraphic'%20in2='n'%20scale='20'%20xChannelSelector='R'%20yChannelSelector='G'/%3E%3C/filter%3E%3Cpath%20d='M-60,-80%20H1460%20V70%20L-60,145%20Z'%20fill='%23fff'%20filter='url%28%23t%29'/%3E%3C/svg%3E"),linear-gradient(#000,#000);
+  -webkit-mask-size:100% 170px,100% calc(100% - 155px);mask-size:100% 170px,100% calc(100% - 155px);
+  -webkit-mask-position:left bottom,left top;mask-position:left bottom,left top;
+  -webkit-mask-repeat:no-repeat,no-repeat;mask-repeat:no-repeat,no-repeat}
+.hero::after,.hero::before{content:none}
+/* 破れ際の白い紙の厚みは次セクション側に持たせる */
+.concept{margin-top:-140px;padding-top:270px}
+.concept>.sheet{display:block;position:absolute;left:0;right:0;top:0;height:220px;background:var(--white);z-index:0;pointer-events:none;
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1400'%20height='220'%20preserveAspectRatio='none'%3E%3Cfilter%20id='t'%20x='-8%25'%20y='-60%25'%20width='116%25'%20height='240%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.045%200.13'%20numOctaves='5'%20seed='19'%20result='n'/%3E%3CfeDisplacementMap%20in='SourceGraphic'%20in2='n'%20scale='16'%20xChannelSelector='R'%20yChannelSelector='G'/%3E%3C/filter%3E%3Cpath%20d='M-60,-60%20H1460%20V115%20L-60,190%20Z'%20fill='%23fff'%20filter='url%28%23t%29'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1400'%20height='220'%20preserveAspectRatio='none'%3E%3Cfilter%20id='t'%20x='-8%25'%20y='-60%25'%20width='116%25'%20height='240%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.045%200.13'%20numOctaves='5'%20seed='19'%20result='n'/%3E%3CfeDisplacementMap%20in='SourceGraphic'%20in2='n'%20scale='16'%20xChannelSelector='R'%20yChannelSelector='G'/%3E%3C/filter%3E%3Cpath%20d='M-60,-60%20H1460%20V115%20L-60,190%20Z'%20fill='%23fff'%20filter='url%28%23t%29'/%3E%3C/svg%3E");
+  -webkit-mask-size:100% 220px;mask-size:100% 220px;
+  -webkit-mask-position:left top;mask-position:left top;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.hero .hp3w{bottom:-30px}
+.concept{--deck:24px}
+.concept::after{filter:url(#torn2) drop-shadow(0 6px 5px rgba(70,58,45,.26));transform:skewY(3deg)}
+.concept::before{filter:url(#tornW2);transform:skewY(3deg)}
+.kittens{--deck:36px}
+.kittens::after{filter:url(#torn3) drop-shadow(0 6px 5px rgba(70,58,45,.26));transform:skewY(-3deg)}
+.kittens::before{filter:url(#tornW4);transform:skewY(-3deg)}
+#voices{--deck:28px}
+#voices::after{filter:url(#torn) drop-shadow(0 6px 5px rgba(70,58,45,.26));transform:skewY(3deg)}
+#voices::before{filter:url(#tornW);transform:skewY(3deg)}
+#ig{--deck:14px}
+#ig::after{filter:url(#torn2) drop-shadow(0 6px 5px rgba(70,58,45,.26));transform:skewY(-3deg)}
+#ig::before{filter:url(#tornW2);transform:skewY(-3deg)}
+#blog{--deck:22px}
+#blog::after{filter:url(#torn3) drop-shadow(0 6px 5px rgba(70,58,45,.26));transform:skewY(3deg)}
+#blog::before{filter:url(#tornW3);transform:skewY(3deg)}
+.contact{--deck:36px}
+.contact::after{filter:url(#torn) drop-shadow(0 6px 5px rgba(70,58,45,.26));transform:skewY(-3deg)}
+.contact::before{filter:url(#tornW5);transform:skewY(-3deg)}
+.kit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:56px 36px}
+.kit{text-align:center}
+.kit .photo{--r:-1.5deg}
+.kit:nth-child(2) .photo{--r:1.5deg}
+.kit:nth-child(3) .photo{--r:-1deg}
+.kit:nth-child(4) .photo{--r:1deg}
+.kit:nth-child(5) .photo{--r:-1.5deg}
+.kit:nth-child(6) .photo{--r:1deg}
+.kit .photo .img{aspect-ratio:4/5}
+.kit .status{display:inline-block;font-size:11px;letter-spacing:.14em;padding:3px 14px;border-radius:20px;margin-bottom:14px}
+.kit .status.open{background:var(--white);color:var(--pistachio-d)}
+.kit .status.soon{background:var(--white);color:var(--pink-d)}
+.kit .status.sold{background:var(--white);color:var(--ink-soft)}
+.kit .nm{font-family:var(--mincho);font-size:19px;letter-spacing:.1em;margin-top:22px}
+.kit .nm span{font-family:var(--en);font-style:italic;font-size:14px;color:var(--pistachio-d);margin-left:6px}
+.kit .meta{font-size:12px;color:var(--ink-soft);letter-spacing:.06em}
+.kit .price{font-size:14px;margin-top:6px;letter-spacing:.08em}
+.kit .price small{font-size:10px;color:var(--ink-soft)}
+
+/* ===== voices ===== */
+.voices .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.voice{text-align:center;padding:0 10px}
+.voice .en{font-family:var(--en);font-style:italic;font-size:40px;color:var(--pink-d);line-height:.4}
+.voice p{font-size:13.5px;color:#6c655b;margin:18px 0 14px;letter-spacing:.06em}
+.voice .who{font-size:12.5px;letter-spacing:.08em}
+.voice .who span{color:var(--ink-soft);font-size:11.5px}
+.voice .sep{width:30px;height:1px;background:var(--pistachio);margin:0 auto 20px}
+
+/* ===== instagram ===== */
+.ig-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.ig-row .photo{width:160px;--r:-2deg}
+.ig-row .photo:nth-child(even){--r:2deg}
+.ig-row .photo .img{aspect-ratio:1}
+
+/* ===== blog ===== */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.post{cursor:pointer}
+.post .photo{--r:-1deg;margin-bottom:20px}
+.post:nth-child(2) .photo{--r:1deg}.post:nth-child(3) .photo{--r:-1.5deg}
+.post .photo .img{aspect-ratio:16/11}
+.post .date{font-family:var(--en);font-style:italic;font-size:14px;color:var(--ink-soft);letter-spacing:.1em}
+.post .cat{font-size:11px;letter-spacing:.1em;color:var(--pistachio-d);margin-left:10px}
+.post h3{font-family:var(--mincho);font-size:16px;letter-spacing:.06em;margin-top:6px;line-height:1.7}
+
+/* blog detail */
+.article{position:fixed;inset:0;z-index:300;background:var(--paper);overflow-y:auto;transform:translateY(100%);transition:transform .6s cubic-bezier(.6,0,.2,1);visibility:hidden}
+.article.open{transform:none;visibility:visible}
+.article .ah{aspect-ratio:21/9;display:flex;align-items:center;justify-content:center;color:var(--pistachio-d);font-family:var(--en);font-style:italic;
+  background:radial-gradient(circle at 40% 35%,var(--pistachio-soft),transparent 60%),linear-gradient(140deg,#f2efe2,#f4e3de)}
+.article .ab{max-width:720px;margin:0 auto;padding:56px 32px 100px}
+.article .ab .date{font-family:var(--en);font-style:italic;color:var(--ink-soft)}
+.article .ab h1{font-family:var(--mincho);font-weight:500;font-size:clamp(23px,3vw,32px);line-height:1.6;margin:8px 0 28px;letter-spacing:.08em}
+.article .ab p{color:#6c655b;margin-bottom:20px;font-size:15px;letter-spacing:.06em}
+.a-close{position:fixed;top:22px;right:26px;z-index:310;width:48px;height:48px;border-radius:50%;border:1px solid var(--ink);background:var(--paper);cursor:pointer;font-size:18px;display:none;align-items:center;justify-content:center}
+.a-close.show{display:flex}
+
+/* ===== contact ===== */
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:10px}
+.ch{text-align:center;padding:40px 24px;background:var(--white);box-shadow:0 14px 30px rgba(75,69,61,.08);transition:.45s}
+.ch:hover{transform:translateY(-6px);box-shadow:0 22px 44px rgba(75,69,61,.13)}
+.ch .ic{width:56px;height:56px;border-radius:50%;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;border:1px solid var(--ink)}
+.ch h3{font-family:var(--mincho);font-size:18px;letter-spacing:.12em;margin-bottom:8px}
+.ch p{font-size:12px;color:var(--ink-soft);margin-bottom:18px;min-height:36px;letter-spacing:.05em}
+
+/* ===== footer ===== */
+footer{text-align:center;padding:160px 0 50px;position:relative}
+footer .flogo{width:clamp(180px,22vw,240px);height:auto;margin:0 auto 10px;display:block}
+footer .fn{font-family:var(--mincho);font-size:15px;letter-spacing:.34em;color:var(--ink-soft)}
+footer .fs{font-family:var(--en);font-style:italic;font-size:13px;color:var(--pistachio-d);margin:4px 0 24px;letter-spacing:.12em}
+footer .fnav{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;font-size:12.5px;letter-spacing:.12em;margin-bottom:22px}
+footer .fnav a{transition:.3s}footer .fnav a:hover{color:var(--pistachio-d)}
+footer .info{font-size:12px;color:var(--ink-soft);line-height:2;letter-spacing:.06em}
+footer .cp{font-family:var(--en);font-style:italic;font-size:11px;color:var(--ink-soft);margin-top:20px;letter-spacing:.1em}
+.to-top{position:fixed;right:28px;bottom:28px;width:50px;height:50px;border-radius:50%;background:var(--white);border:1px solid var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:80;opacity:0;pointer-events:none;transition:.4s}
+.to-top.show{opacity:1;pointer-events:auto}.to-top:hover{background:var(--pistachio);border-color:var(--pistachio)}
+
+@media(max-width:860px){
+  /* ヒーローの猫：四隅に縮小配置（ヘッダー・見出しを避ける） */
+  .burger{display:flex}
+  header{padding:16px 20px;gap:12px}
+  header.scrolled{padding:12px 20px}
+  .hcta{font-size:11px;padding:8px 15px;letter-spacing:.1em;margin-left:auto}
+  .hp1{width:248px;top:12%;left:-6%}
+  .hp2{width:293px;top:13%;right:-10%;--fl:18px}
+  .hero .hp3w{width:270px;bottom:-34px;left:-7%}
+  .hp4{width:218px;bottom:6%;right:-4%}
+  .hero .p img,.hp3w img{filter:drop-shadow(4px 7px 7px rgba(82,70,54,.3))}
+  .concept .wrap{grid-template-columns:1fr;gap:60px}.concept-collage{height:360px;max-width:420px;margin:0 auto}
+  .kit-grid,.blog-grid,.voices .wrap,.contact-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .wrap{padding:0 22px}
+  .hp1{width:177px;top:13%;left:-5%}
+  .hp2{width:210px;top:15%;right:-11%;--fl:14px}
+  .hero .hp3w{width:189px;bottom:-26px;left:-10%}
+  .hp4{width:156px;bottom:5%;right:-5%}
+  .hero .p img,.hp3w img{filter:drop-shadow(3px 5px 5px rgba(82,70,54,.3))}
+  .kit-grid,.blog-grid,.voices .wrap,.contact-grid{grid-template-columns:1fr;gap:40px}
+  .ig-row .photo{width:44%}
+}
+</style>
+</head>
+<body>
+
+<!-- cat line mark -->
+<svg width="0" height="0" style="position:absolute"><defs>
+<g id="cat"><path d="M16 32 L10 10 L28 22 M64 32 L70 10 L52 22" fill="none" stroke="#8aae7f" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M14 42 Q14 66 40 68 Q66 66 66 42 Q66 22 40 22 Q14 22 14 42Z" fill="none" stroke="#8aae7f" stroke-width="2.4"/><circle cx="31" cy="42" r="2.2" fill="#8aae7f"/><circle cx="49" cy="42" r="2.2" fill="#8aae7f"/><path d="M40 48 l-3 3 M40 48 l3 3 M40 48 v3" stroke="#8aae7f" stroke-width="1.7" fill="none" stroke-linecap="round"/></g>
+<g id="leaf"><path d="M20 4 C40 10 44 34 20 44 C-4 34 0 10 20 4Z M20 10 V40" fill="none" stroke="#a9c6a0" stroke-width="1.6"/></g>
+<filter id="torn" x="-4%" y="-40%" width="108%" height="180%"><feTurbulence type="fractalNoise" baseFrequency="0.055 0.14" numOctaves="4" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="11" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="tornW" x="-6%" y="-60%" width="112%" height="220%"><feTurbulence type="fractalNoise" baseFrequency="0.03 0.16" numOctaves="5" seed="12" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="16" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="torn2" x="-4%" y="-40%" width="108%" height="180%"><feTurbulence type="fractalNoise" baseFrequency="0.04 0.11" numOctaves="4" seed="17" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="13" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="torn3" x="-4%" y="-40%" width="108%" height="180%"><feTurbulence type="fractalNoise" baseFrequency="0.07 0.17" numOctaves="4" seed="31" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="tornW2" x="-6%" y="-60%" width="112%" height="220%"><feTurbulence type="fractalNoise" baseFrequency="0.045 0.13" numOctaves="5" seed="23" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="tornW0" x="-6%" y="-60%" width="112%" height="220%"><feTurbulence type="fractalNoise" baseFrequency="0.04 0.15" numOctaves="5" seed="12" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="11" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="tornW4" x="-6%" y="-60%" width="112%" height="220%"><feTurbulence type="fractalNoise" baseFrequency="0.06 0.19" numOctaves="5" seed="41" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="10" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="tornW5" x="-6%" y="-60%" width="112%" height="220%"><feTurbulence type="fractalNoise" baseFrequency="0.035 0.15" numOctaves="5" seed="55" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="11" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="tornW3" x="-6%" y="-60%" width="112%" height="220%"><feTurbulence type="fractalNoise" baseFrequency="0.06 0.19" numOctaves="5" seed="41" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="tornM" x="-10%" y="-40%" width="120%" height="180%"><feTurbulence type="fractalNoise" baseFrequency="0.05 0.15" numOctaves="4" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G"/></filter>
+<mask id="catCut" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="-40" y="-120" width="380" height="462"><rect x="-40" y="-120" width="380" height="450" fill="#fff" filter="url(#tornM)"/></mask>
+</defs></svg>
+
+<!-- header -->
+<header id="hdr">
+  <a href="#top" class="brand"><img class="blogo" src="logo.png" alt="mememaru cattery"></a>
+  <nav class="main">
+    <a href="#about">わたしたち</a><a href="#kittens">子猫</a><a href="#voices">お客様の声</a><a href="#blog">ブログ</a><a href="#ig">Instagram</a>
+  </nav>
+  <a href="#contact" class="hcta">お問い合わせ</a>
+  <button class="burger" id="burger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button>
+</header>
+
+<div class="drawer" id="drawer">
+  <nav>
+    <a href="#about">わたしたち<em>About</em></a>
+    <a href="#kittens">子猫<em>Kittens</em></a>
+    <a href="#voices">お客様の声<em>Voices</em></a>
+    <a href="#blog">ブログ<em>Blog</em></a>
+    <a href="#ig">Instagram<em>Feed</em></a>
+  </nav>
+  <a href="#contact" class="dcta">お問い合わせ</a>
+  <div class="dsub">Healthy &amp; Happy Kittens</div>
+</div>
+
+<!-- hero -->
+<div class="heroWrap">
+<section class="hero" id="top">
+  <div class="sheet"></div>
+
+  <div class="p drift hp1" data-speed="0.12"><img class="sway" style="--r:-4deg" src="cat1.png" alt="子猫"></div>
+  <div class="p drift hp2" style="--dur:18s;animation-delay:.6s" data-speed="0.2"><img class="sway" style="--r:5deg" src="cat2.png" alt="猫"></div>
+  <div class="hcut hp3w"><div class="in drift" style="--dur:21s;--fl:10px;animation-delay:1s"><img class="sway" style="--r:4deg" src="cat3.png" alt="猫"></div></div>
+  <div class="p drift hp4" style="--dur:8.5s;animation-delay:.3s" data-speed="0.24"><img class="sway" style="--r:-5deg" src="cat4.png" alt="子猫"></div>
+
+  <div class="wrap">
+    <span class="en-top">mo-fu mo-fu, quietly</span>
+    <h1>もふもふと、<br><span class="tint">幸せな静かな</span>暮らし。</h1>
+    <p class="sub">健康で、人のそばが好きな子猫たち。<br>毎日の小さな記録を、一枚ずつ並べて。</p>
+  </div>
+  <div class="scroll-cue en">Scroll</div>
+</section>
+</div>
+
+<!-- concept -->
+<section class="concept rip pink" id="about">
+  <div class="sheet"></div>
+  <div class="wrap">
+    <div class="concept-collage reveal">
+      <div class="photo cc1 sway" style="--r:-3deg"><div class="img"><span class="lab en">photo</span></div></div>
+      <div class="photo cc2 sway" style="--r:4deg;animation-delay:.8s"><div class="img"><span class="lab en">photo</span></div></div>
+      <div class="photo cc3 sway" style="--r:5deg;animation-delay:1.4s"><div class="img"><span class="lab en">photo</span></div></div>
+    </div>
+    <div class="concept-text reveal">
+      <span class="en">What is mememaru</span>
+      <h2>一頭ずつに、<br><span class="tint">家族のように</span>向きあって。</h2>
+      <p>mememaru は、数をたくさん育てるブリーダーではありません。母猫の体調、子猫の性格、そして迎えてくださるご家族との相性を見ながら、ていねいに育てています。</p>
+      <p>生まれた日からの様子は写真と動画で記録し、Instagramでも公開。お渡しのあとも、その子の“つづき”を見守れる関係でありたいと思っています。</p>
+      <a href="#kittens" class="thin-btn" style="margin-top:8px">子猫たちを見る</a>
+    </div>
+  </div>
+</section>
+
+<!-- kittens -->
+<section class="kittens rip green" id="kittens">
+  <div class="sheet"></div>
+  <div class="wrap">
+    <div class="shead reveal"><span class="en">Our Kittens</span><h2>家族を募集している子猫</h2><p>ご予約状況は随時更新しています。気になる子はお気軽にお問い合わせください。</p></div>
+    <div class="kit-grid">
+      <div class="kit reveal"><div class="photo sway"><div class="img"><span class="lab en">photo / movie</span></div></div><div class="nm">モカ<span>Mocha</span></div><div class="meta">ラグドール ♀ ／ 20XX.9.12生</div><div class="price">¥XXX,000 <small>税込</small></div><div style="margin-top:12px"><span class="status open">ご予約受付中</span></div></div>
+      <div class="kit reveal"><div class="photo sway" style="animation-delay:.3s"><div class="img"><span class="lab en">photo / movie</span></div></div><div class="nm">そら<span>Sora</span></div><div class="meta">ブリティッシュSH ♂ ／ 20XX.10.3生</div><div class="price">¥XXX,000 <small>税込</small></div><div style="margin-top:12px"><span class="status soon">近日公開</span></div></div>
+      <div class="kit reveal"><div class="photo sway" style="animation-delay:.6s"><div class="img"><span class="lab en">photo / movie</span></div></div><div class="nm">ゆき<span>Yuki</span></div><div class="meta">スコティッシュ ♀ ／ 20XX.9.28生</div><div class="price">¥XXX,000 <small>税込</small></div><div style="margin-top:12px"><span class="status open">ご予約受付中</span></div></div>
+      <div class="kit reveal"><div class="photo sway" style="animation-delay:.2s"><div class="img"><span class="lab en">photo / movie</span></div></div><div class="nm">こむぎ<span>Komugi</span></div><div class="meta">マンチカン ♂ ／ 20XX.10.9生</div><div class="price">¥XXX,000 <small>税込</small></div><div style="margin-top:12px"><span class="status soon">近日公開</span></div></div>
+      <div class="kit reveal"><div class="photo sway" style="animation-delay:.5s"><div class="img"><span class="lab en">photo / movie</span></div></div><div class="nm">きなこ<span>Kinako</span></div><div class="meta">スコティッシュ ♀ ／ 20XX.8.1生</div><div class="price" style="color:var(--ink-soft)">ありがとうございました</div><div style="margin-top:12px"><span class="status sold">ご成約</span></div></div>
+      <div class="kit reveal"><div class="photo sway" style="animation-delay:.8s"><div class="img"><span class="lab en">photo / movie</span></div></div><div class="nm">もち<span>Mochi</span></div><div class="meta">ラグドール ♂ ／ 20XX.9.20生</div><div class="price">¥XXX,000 <small>税込</small></div><div style="margin-top:12px"><span class="status open">ご予約受付中</span></div></div>
+    </div>
+    <div class="center reveal" style="margin-top:70px"><a href="#" class="thin-btn">すべての子猫を見る</a></div>
+  </div>
+</section>
+
+<!-- voices -->
+<section id="voices" class="rip pink">
+  <div class="sheet"></div>
+  <div class="wrap">
+    <div class="shead reveal"><span class="en">Happy Families</span><h2>お迎えいただいたご家族の声</h2></div>
+    <div class="wrap voices" style="padding:0">
+      <div class="voice reveal"><div class="en">“</div><div class="sep"></div><p>見学のときから丁寧で、迎えてからも成長の相談にのってくださり、本当に安心でした。</p><div class="who">T様ご家族<br><span>ラグドール・モカちゃん</span></div></div>
+      <div class="voice reveal"><div class="en">“</div><div class="sep"></div><p>Instagramで毎日見ていた子をそのままお迎え。性格まで分かっていて、すぐ家族に馴染みました。</p><div class="who">K様ご家族<br><span>スコティッシュ・ひなたくん</span></div></div>
+      <div class="voice reveal"><div class="en">“</div><div class="sep"></div><p>健康面の説明がしっかりしていて、アフターのご相談にもすぐ応じてくださり心強かったです。</p><div class="who">M様ご家族<br><span>ブリティッシュ・らむちゃん</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- instagram -->
+<section id="ig" class="rip green">
+  <div class="sheet"></div>
+  <div class="wrap">
+    <div class="shead reveal"><span class="en">Instagram</span><h2>日々のもふもふを、そのまま</h2><p>@mememarufamily ／ 更新のたび、サイトにも最新の投稿が並びます。</p></div>
+    <div class="ig-row reveal">
+      <div class="photo sway"><div class="img"><span class="lab en">photo</span></div></div>
+      <div class="photo sway" style="animation-delay:.4s"><div class="img"><span class="lab en">photo</span></div></div>
+      <div class="photo sway" style="animation-delay:.8s"><div class="img"><span class="lab en">photo</span></div></div>
+      <div class="photo sway" style="animation-delay:.2s"><div class="img"><span class="lab en">photo</span></div></div>
+      <div class="photo sway" style="animation-delay:.6s"><div class="img"><span class="lab en">photo</span></div></div>
+    </div>
+    <div class="center reveal" style="margin-top:46px"><a href="https://www.instagram.com/mememarufamily/" target="_blank" rel="noopener" class="thin-btn">@mememarufamily をフォロー</a></div>
+  </div>
+</section>
+
+<!-- blog -->
+<section id="blog" class="rip pink">
+  <div class="sheet"></div>
+  <div class="wrap">
+    <div class="shead reveal"><span class="en">Blog &amp; News</span><h2>子猫たちの成長記録・お知らせ</h2><p>記事をクリックすると詳細ページが開きます（一覧 → 詳細デモ）。</p></div>
+    <div class="blog-grid">
+      <article class="post reveal" data-a="1"><div class="photo sway"><div class="img"><span class="lab en">photo</span></div></div><span class="date en">20XX.11.18</span><span class="cat">子猫日記</span><h3>ラグドールの子猫、生後2ヶ月の様子</h3></article>
+      <article class="post reveal" data-a="2"><div class="photo sway" style="animation-delay:.3s"><div class="img"><span class="lab en">photo</span></div></div><span class="date en">20XX.11.05</span><span class="cat">お迎えガイド</span><h3>はじめて猫を迎える方へ｜準備リスト</h3></article>
+      <article class="post reveal" data-a="3"><div class="photo sway" style="animation-delay:.6s"><div class="img"><span class="lab en">photo</span></div></div><span class="date en">20XX.10.22</span><span class="cat">お知らせ</span><h3>年末年始の見学スケジュールについて</h3></article>
+    </div>
+  </div>
+</section>
+
+<!-- blog detail -->
+<div class="article" id="article">
+  <div class="ah">article main photo / movie</div>
+  <div class="ab"><div class="date en" id="aDate">20XX.11.18</div><h1 id="aTitle">ラグドールの子猫、生後2ヶ月の様子</h1>
+    <p>これはブログ「一覧 → 詳細」の動きを確認するためのデモ記事です。実際には管理画面から投稿した記事がここに表示されます。</p>
+    <p>生後2ヶ月をむかえた子猫たち。離乳食にもすっかり慣れ、兄妹でのじゃれ合いが一日のほとんどを占めるようになりました。この時期の関わり方が、将来の人なつっこさに大きく影響します。</p>
+    <p>mememaru では毎日の様子を写真と短い動画で記録し、Instagramでも公開しています。</p>
+  </div>
+</div>
+<button class="a-close" id="aClose">✕</button>
+
+<!-- contact -->
+<section class="contact rip green" id="contact">
+  <div class="sheet"></div>
+  <div class="wrap">
+    <div class="shead reveal"><span class="en">Contact</span><h2>ご相談・見学のお申し込み</h2><p>どの窓口からでもお気軽に。通常1〜2日以内にご返信します。</p></div>
+    <div class="contact-grid">
+      <div class="ch reveal"><div class="ic"><svg width="24" viewBox="0 0 24 24" fill="none" stroke="#4b453d" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><h3>メール</h3><p>じっくり相談したい方に。24時間受付。</p><a href="#" class="thin-btn">フォームを開く</a></div>
+      <div class="ch reveal"><div class="ic"><svg width="23" viewBox="0 0 24 24" fill="none" stroke="#4b453d" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#4b453d"/></svg></div><h3>Instagram DM</h3><p>投稿を見ながら、気軽に質問を。</p><a href="https://www.instagram.com/mememarufamily/" target="_blank" rel="noopener" class="thin-btn">DMを送る</a></div>
+      <div class="ch reveal"><div class="ic"><svg width="24" viewBox="0 0 24 24" fill="none" stroke="#4b453d" stroke-width="1.3"><path d="M12 4C7 4 3 7.3 3 11.4c0 3.7 3.3 6.8 7.7 7.4.3 0 .5.2.5.5l-.2 1.5c0 .3.2.5.5.4 1-.5 5-3 6.8-5.3 1.1-1.2 1.7-2.6 1.7-4C21 7.3 17 4 12 4z"/></svg></div><h3>LINE</h3><p>いちばん手軽。登録特典のミニガイド付き。</p><a href="#" class="thin-btn">友だち追加</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- footer -->
+<footer>
+  <img class="flogo" src="logo.png" alt="mememaru cattery">
+  <div class="fn">cattery</div>
+  <div class="fs en">Healthy &amp; Happy Kittens</div>
+  <div class="fnav"><a href="#about">わたしたち</a><a href="#kittens">子猫</a><a href="#voices">お客様の声</a><a href="#blog">ブログ</a><a href="#contact">お問い合わせ</a></div>
+  <div class="info">子猫専門ブリーダー ／ 東京・〇〇区　｜　営業 10:00–18:00（見学は予約制）<br>動物取扱業 登録番号 第000000号　｜　TEL 000-0000-0000</div>
+  <div class="cp en">© 20XX mememaru cattery</div>
+</footer>
+
+<div class="to-top" id="toTop"><svg width="16" viewBox="0 0 24 24" fill="none" stroke="#4b453d" stroke-width="1.8"><path d="M6 15l6-6 6 6"/></svg></div>
+
+<script>
+const hdr=document.getElementById('hdr');
+const burger=document.getElementById('burger'),drawer=document.getElementById('drawer');
+const setMenu=o=>{burger.classList.toggle('on',o);drawer.classList.toggle('open',o);document.body.classList.toggle('menu',o);
+  burger.setAttribute('aria-expanded',String(o));burger.setAttribute('aria-label',o?'メニューを閉じる':'メニューを開く');
+  document.body.style.overflow=o?'hidden':'';};
+burger.addEventListener('click',()=>setMenu(!drawer.classList.contains('open')));
+drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false);});
+matchMedia('(min-width:861px)').addEventListener('change',e=>{if(e.matches)setMenu(false);});
+addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>40));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// gentle parallax for hero photos
+const par=[...document.querySelectorAll('[data-speed]')];
+addEventListener('scroll',()=>{const y=scrollY;par.forEach(el=>{el.style.marginTop=(y*parseFloat(el.dataset.speed)*-0.4)+'px';});},{passive:true});
+const tt=document.getElementById('toTop');
+addEventListener('scroll',()=>tt.classList.toggle('show',scrollY>500));
+tt.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+const art=document.getElementById('article'),aClose=document.getElementById('aClose');
+const data={1:{d:'20XX.11.18',t:'ラグドールの子猫、生後2ヶ月の様子'},2:{d:'20XX.11.05',t:'はじめて猫を迎える方へ｜準備リスト'},3:{d:'20XX.10.22',t:'年末年始の見学スケジュールについて'}};
+document.querySelectorAll('.post').forEach(c=>c.addEventListener('click',()=>{const k=c.dataset.a;document.getElementById('aDate').textContent=data[k].d;document.getElementById('aTitle').textContent=data[k].t;art.classList.add('open');aClose.classList.add('show');document.body.style.overflow='hidden';}));
+aClose.addEventListener('click',()=>{art.classList.remove('open');aClose.classList.remove('show');document.body.style.overflow='';});
+</script>
+</body>
+</html>
