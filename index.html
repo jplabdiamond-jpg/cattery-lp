@@ -34,7 +34,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:var(--mincho);color:var(--ink);
-  background:linear-gradient(rgba(252,248,241,.8),rgba(252,248,241,.8)) top left/100% 100% no-repeat,url('bg.jpg') top center/1400px auto repeat;
+  background:linear-gradient(rgba(252,248,241,.8),rgba(252,248,241,.8)) top left/100% 100% no-repeat,url('bg.webp') top center/1400px auto repeat;
   background-color:var(--paper);line-height:2.05;letter-spacing:.09em;overflow-x:hidden;font-weight:400;-webkit-font-smoothing:antialiased;position:relative}
 /* paper texture */
 body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;mix-blend-mode:multiply;opacity:.26;
@@ -82,7 +82,7 @@ nav.main a:hover{color:var(--pistachio-d)}nav.main a:hover::after{width:100%}
 .burger.on span:nth-child(2){opacity:0}
 .burger.on span:nth-child(3){transform:translateY(-8.8px) rotate(-42deg)}
 .drawer{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:linear-gradient(rgba(252,248,241,.95),rgba(252,248,241,.95)) top left/100% 100% no-repeat,url('bg.jpg') top center/1400px auto repeat;
+  background:linear-gradient(rgba(252,248,241,.95),rgba(252,248,241,.95)) top left/100% 100% no-repeat,url('bg.webp') top center/1400px auto repeat;
   background-color:var(--paper);
   opacity:0;visibility:hidden;transform:translateY(-12px);transition:.5s cubic-bezier(.22,.8,.3,1)}
 .drawer.open{opacity:1;visibility:visible;transform:none}
@@ -157,7 +157,7 @@ section{position:relative;padding:110px 0}
 /* 破れ際の白い紙の厚み。--deck でセクションごとに白幅を変える */
 .rip::before,.hero::before{content:"";position:absolute;left:-60px;right:-60px;top:calc(100% - 34px);height:calc(88px + var(--deck,16px));background:var(--white);
   transform-origin:center;pointer-events:none;z-index:2}
-.hero::after{background:linear-gradient(rgba(252,248,241,.8),rgba(252,248,241,.8)) top left/100% 100% no-repeat,url('bg.jpg') top center/1400px auto repeat;background-color:var(--paper)}
+.hero::after{background:linear-gradient(rgba(252,248,241,.8),rgba(252,248,241,.8)) top left/100% 100% no-repeat,url('bg.webp') top center/1400px auto repeat;background-color:var(--paper)}
 .hero{position:relative;z-index:70}
 .hero>*{position:relative;z-index:1}
 .concept{z-index:60}.kittens{z-index:50}#voices{z-index:40}#ig{z-index:30}#blog{z-index:20}.contact{z-index:10}
@@ -169,7 +169,7 @@ footer{position:relative;z-index:1}
 /* ▼ ヒーロー：古紙画像そのものを破く（背景＋マスク） */
 .heroWrap{position:relative;z-index:70;filter:drop-shadow(0 7px 6px rgba(70,58,45,.22))}
 .hero{z-index:auto;
-  background:linear-gradient(rgba(252,248,241,.8),rgba(252,248,241,.8)) top left/100% 100% no-repeat,url('bg.jpg') top center/1400px auto repeat;
+  background:linear-gradient(rgba(252,248,241,.8),rgba(252,248,241,.8)) top left/100% 100% no-repeat,url('bg.webp') top center/1400px auto repeat;
   background-color:var(--paper);
   -webkit-mask-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1400'%20height='170'%20preserveAspectRatio='none'%3E%3Cfilter%20id='t'%20x='-8%25'%20y='-60%25'%20width='116%25'%20height='240%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.05%200.14'%20numOctaves='5'%20seed='7'%20result='n'/%3E%3CfeDisplacementMap%20in='SourceGraphic'%20in2='n'%20scale='20'%20xChannelSelector='R'%20yChannelSelector='G'/%3E%3C/filter%3E%3Cpath%20d='M-60,-80%20H1460%20V70%20L-60,145%20Z'%20fill='%23fff'%20filter='url%28%23t%29'/%3E%3C/svg%3E"),linear-gradient(#000,#000);
   mask-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1400'%20height='170'%20preserveAspectRatio='none'%3E%3Cfilter%20id='t'%20x='-8%25'%20y='-60%25'%20width='116%25'%20height='240%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.05%200.14'%20numOctaves='5'%20seed='7'%20result='n'/%3E%3CfeDisplacementMap%20in='SourceGraphic'%20in2='n'%20scale='20'%20xChannelSelector='R'%20yChannelSelector='G'/%3E%3C/filter%3E%3Cpath%20d='M-60,-80%20H1460%20V70%20L-60,145%20Z'%20fill='%23fff'%20filter='url%28%23t%29'/%3E%3C/svg%3E"),linear-gradient(#000,#000);
@@ -326,7 +326,7 @@ footer .cp{font-family:var(--en);font-style:italic;font-size:11px;color:var(--in
 
 <!-- header -->
 <header id="hdr">
-  <a href="#top" class="brand"><img class="blogo" src="logo.png" alt="mememaru cattery"></a>
+  <a href="#top" class="brand"><img class="blogo" src="logo.webp" decoding="async" alt="mememaru cattery"></a>
   <nav class="main">
     <a href="#about">わたしたち</a><a href="#kittens">子猫</a><a href="#voices">お客様の声</a><a href="#blog">ブログ</a><a href="#ig">Instagram</a>
   </nav>
@@ -351,10 +351,10 @@ footer .cp{font-family:var(--en);font-style:italic;font-size:11px;color:var(--in
 <section class="hero" id="top">
   <div class="sheet"></div>
 
-  <div class="p drift hp1" data-speed="0.12"><img class="sway" style="--r:-4deg" src="cat1.png" alt="子猫"></div>
-  <div class="p drift hp2" style="--dur:18s;animation-delay:.6s" data-speed="0.2"><img class="sway" style="--r:5deg" src="cat2.png" alt="猫"></div>
-  <div class="hcut hp3w"><div class="in drift" style="--dur:21s;--fl:10px;animation-delay:1s"><img class="sway" style="--r:4deg" src="cat3.png" alt="猫"></div></div>
-  <div class="p drift hp4" style="--dur:8.5s;animation-delay:.3s" data-speed="0.24"><img class="sway" style="--r:-5deg" src="cat4.png" alt="子猫"></div>
+  <div class="p drift hp1" data-speed="0.12"><img class="sway" decoding="async" style="--r:-4deg" src="cat1.webp" alt="子猫"></div>
+  <div class="p drift hp2" style="--dur:18s;animation-delay:.6s" data-speed="0.2"><img class="sway" decoding="async" style="--r:5deg" src="cat2.webp" alt="猫"></div>
+  <div class="hcut hp3w"><div class="in drift" style="--dur:21s;--fl:10px;animation-delay:1s"><img class="sway" decoding="async" style="--r:4deg" src="cat3.webp" alt="猫"></div></div>
+  <div class="p drift hp4" style="--dur:8.5s;animation-delay:.3s" data-speed="0.24"><img class="sway" decoding="async" style="--r:-5deg" src="cat4.webp" alt="子猫"></div>
 
   <div class="wrap">
     <span class="en-top">mo-fu mo-fu, quietly</span>
@@ -469,7 +469,7 @@ footer .cp{font-family:var(--en);font-style:italic;font-size:11px;color:var(--in
 
 <!-- footer -->
 <footer>
-  <img class="flogo" src="logo.png" alt="mememaru cattery">
+  <img class="flogo" src="logo.webp" loading="lazy" decoding="async" alt="mememaru cattery">
   <div class="fn">cattery</div>
   <div class="fs en">Healthy &amp; Happy Kittens</div>
   <div class="fnav"><a href="#about">わたしたち</a><a href="#kittens">子猫</a><a href="#voices">お客様の声</a><a href="#blog">ブログ</a><a href="#contact">お問い合わせ</a></div>
@@ -489,15 +489,22 @@ burger.addEventListener('click',()=>setMenu(!drawer.classList.contains('open')))
 drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
 addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false);});
 matchMedia('(min-width:861px)').addEventListener('change',e=>{if(e.matches)setMenu(false);});
-addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>40));
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-// gentle parallax for hero photos
-const par=[...document.querySelectorAll('[data-speed]')];
-addEventListener('scroll',()=>{const y=scrollY;par.forEach(el=>{el.style.marginTop=(y*parseFloat(el.dataset.speed)*-0.4)+'px';});},{passive:true});
 const tt=document.getElementById('toTop');
-addEventListener('scroll',()=>tt.classList.toggle('show',scrollY>500));
 tt.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+// scroll: 1リスナーに集約し rAF で間引き。パララックスは translate（合成のみ・レイアウトを起こさない）
+const par=[...document.querySelectorAll('[data-speed]')].map(el=>[el,parseFloat(el.dataset.speed)*-0.4]);
+let ticking=false;
+const onScroll=()=>{
+  const y=scrollY;
+  hdr.classList.toggle('scrolled',y>40);
+  tt.classList.toggle('show',y>500);
+  if(y<innerHeight*1.4)for(const[el,k]of par)el.style.translate='0 '+(y*k).toFixed(1)+'px';
+  ticking=false;
+};
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll);}},{passive:true});
+onScroll();
 const art=document.getElementById('article'),aClose=document.getElementById('aClose');
 const data={1:{d:'20XX.11.18',t:'ラグドールの子猫、生後2ヶ月の様子'},2:{d:'20XX.11.05',t:'はじめて猫を迎える方へ｜準備リスト'},3:{d:'20XX.10.22',t:'年末年始の見学スケジュールについて'}};
 document.querySelectorAll('.post').forEach(c=>c.addEventListener('click',()=>{const k=c.dataset.a;document.getElementById('aDate').textContent=data[k].d;document.getElementById('aTitle').textContent=data[k].t;art.classList.add('open');aClose.classList.add('show');document.body.style.overflow='hidden';}));
